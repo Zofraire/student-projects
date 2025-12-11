@@ -108,7 +108,7 @@ The platform supports four types of media for each project:
 - Download option available
 
 ### 3D Models (MODEL_3D)
-- Formats: GLB, GLTF
+- Formats: GLB, GLTF, FBX, OBJ
 - Interactive viewer with orbit controls
 - Auto-rotate feature
 
