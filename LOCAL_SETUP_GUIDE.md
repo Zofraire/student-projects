@@ -102,7 +102,7 @@ cp .env.example .env
 Now open `.env` in a text editor (e.g., `nano .env` or `xed .env`) and replace the contents with:
 
 ```
-DATABASE_URL="postgresql://myuser:student@123@localhost:5432/student_projects"
+DATABASE_URL="postgresql://myuser:student%40123@localhost:5432/student_projects"
 NEXTAUTH_SECRET="fe3cc338af3c1744d1e48894bd8a9e855e468af47d67db5a095497180d761a12"
 NEXTAUTH_URL="http://localhost:3000"
 ```
