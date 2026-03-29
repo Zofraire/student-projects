@@ -125,6 +125,7 @@
     "supportedFormats": "Images (JPG, PNG, GIF) / PDFs / 3D Models (FBX, OBJ, GLB, GLTF) / Videos (MP4, WebM)",
     "addVideoUrl": "Add video URL (YouTube, Vimeo, or direct link)",
     "addVideo": "Add Video",
+    "addTitleOptional": "Add title (optional)",
     "new": "New",
     "save": "Save",
     "saveProject": "Save Project",

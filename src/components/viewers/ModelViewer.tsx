@@ -1,6 +1,7 @@
 "use client";
 
 import { Suspense, useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment, Center, Html } from "@react-three/drei";
 import { Button } from "@/src/components/ui/button";
@@ -19,22 +20,22 @@ interface ModelViewerProps {
   format?: string;
 }
 
-function Loader() {
+function Loader({ label }: { label: string }) {
   return (
     <Html center>
       <div className="flex flex-col items-center gap-2">
         <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-500 border-t-transparent" />
-        <p className="text-sm text-gray-600">Loading 3D model...</p>
+        <p className="text-sm text-gray-600">{label}</p>
       </div>
     </Html>
   );
 }
 
-function ErrorDisplay({ message }: { message: string }) {
+function ErrorDisplay({ title, message }: { title: string; message: string }) {
   return (
     <Html center>
       <div className="bg-red-100 text-red-600 p-4 rounded-lg max-w-xs text-center">
-        <p className="font-medium">Error loading model</p>
+        <p className="font-medium">{title}</p>
         <p className="text-sm mt-1">{message}</p>
       </div>
     </Html>
@@ -44,9 +45,10 @@ function ErrorDisplay({ message }: { message: string }) {
 interface ModelProps {
   url: string;
   format?: string;
+  labels: { loading: string; error: string; noModel: string };
 }
 
-function Model({ url, format }: ModelProps) {
+function Model({ url, format, labels }: ModelProps) {
   const [model, setModel] = useState<THREE.Object3D | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -187,21 +189,22 @@ function Model({ url, format }: ModelProps) {
   }, [url, format]);
 
   if (loading) {
-    return <Loader />;
+    return <Loader label={labels.loading} />;
   }
 
   if (error) {
-    return <ErrorDisplay message={error} />;
+    return <ErrorDisplay title={labels.error} message={error} />;
   }
 
   if (!model) {
-    return <ErrorDisplay message="No model loaded" />;
+    return <ErrorDisplay title={labels.error} message={labels.noModel} />;
   }
 
   return <primitive object={model} />;
 }
 
 export default function ModelViewer({ url, title, format }: ModelViewerProps) {
+  const t = useTranslations("project");
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [key, setKey] = useState(0);
   const [autoRotate, setAutoRotate] = useState(true);
@@ -232,7 +235,7 @@ export default function ModelViewer({ url, title, format }: ModelViewerProps) {
       {/* Toolbar */}
       <div className="flex items-center justify-between border-b bg-muted/50 px-4 py-2">
         <div className="flex items-center gap-2">
-          <h3 className="text-sm font-medium">{title || "3D Model"}</h3>
+          <h3 className="text-sm font-medium">{title || t("models")}</h3>
           {detectedFormat && (
             <span className="text-xs bg-gray-200 px-2 py-0.5 rounded uppercase">
               {detectedFormat}
@@ -246,9 +249,9 @@ export default function ModelViewer({ url, title, format }: ModelViewerProps) {
             onClick={() => setAutoRotate(!autoRotate)}
             className="text-xs"
           >
-            {autoRotate ? "Stop" : "Rotate"}
+            {autoRotate ? t("stop") : t("rotate")}
           </Button>
-          <Button variant="ghost" size="icon" onClick={handleReset} title="Reset View">
+          <Button variant="ghost" size="icon" onClick={handleReset} title={t("resetView")}>
             <RotateCcw className="h-4 w-4" />
           </Button>
           <Button variant="ghost" size="icon" onClick={handleFullscreen}>
@@ -269,14 +272,14 @@ export default function ModelViewer({ url, title, format }: ModelViewerProps) {
           camera={{ position: [0, 1, 4], fov: 50 }}
           style={{ background: "transparent" }}
         >
-          <Suspense fallback={<Loader />}>
+          <Suspense fallback={<Loader label={t("loading3DModel")} />}>
             <ambientLight intensity={0.6} />
             <directionalLight position={[10, 10, 5]} intensity={1} />
             <directionalLight position={[-10, -10, -5]} intensity={0.4} />
             <pointLight position={[0, 10, 0]} intensity={0.5} />
             
             <Center>
-              <Model url={url} format={detectedFormat} />
+              <Model url={url} format={detectedFormat} labels={{ loading: t("loading3DModel"), error: t("errorLoadingModel"), noModel: t("noModelLoaded") }} />
             </Center>
             
             <OrbitControls
@@ -294,7 +297,7 @@ export default function ModelViewer({ url, title, format }: ModelViewerProps) {
 
         {/* Controls hint */}
         <div className="absolute bottom-4 left-4 rounded-md bg-black/60 px-3 py-1.5 text-xs text-white backdrop-blur-sm">
-          Drag to rotate • Scroll to zoom • Right-click to pan
+          {t("modelControls")}
         </div>
       </div>
     </div>

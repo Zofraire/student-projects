@@ -125,6 +125,7 @@
     "supportedFormats": "Зураг (JPG, PNG, GIF) / PDF / 3D загвар (FBX, OBJ, GLB, GLTF) / Видео (MP4, WebM)",
     "addVideoUrl": "Видео URL нэмэх (YouTube, Vimeo, эсвэл шууд холбоос)",
     "addVideo": "Видео нэмэх",
+    "addTitleOptional": "Гарчиг нэмэх (заавал биш)",
     "new": "Шинэ",
     "save": "Хадгалах",
     "saveProject": "Төсөл хадгалах",
