@@ -56,6 +56,7 @@ export default function AdminProjectsPage() {
   const router = useRouter();
   const t = useTranslations("adminProjects");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const thumbnailInputRef = useRef<HTMLInputElement>(null);
 
   const [projects, setProjects] = useState<Project[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -166,6 +167,35 @@ export default function AdminProjectsPage() {
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
+    }
+  };
+
+  const handleThumbnailUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const res = await fetch("/api/admin/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setForm((prev) => ({ ...prev, thumbnail: data.url }));
+      } else {
+        alert("Failed to upload thumbnail");
+      }
+    } catch (error) {
+      console.error("Upload error:", error);
+      alert("Upload failed");
+    } finally {
+      setUploading(false);
+      if (thumbnailInputRef.current) thumbnailInputRef.current.value = "";
     }
   };
 
@@ -450,7 +480,23 @@ export default function AdminProjectsPage() {
 
                 <div className="space-y-2">
                   <Label htmlFor="thumbnail">{t("projectThumbnail")}</Label>
-                  <Input id="thumbnail" value={form.thumbnail} onChange={(e) => setForm({ ...form, thumbnail: e.target.value })} placeholder="https://..." />
+                  <div className="flex gap-2">
+                    <Input id="thumbnail" value={form.thumbnail} onChange={(e) => setForm({ ...form, thumbnail: e.target.value })} placeholder="https://..." className="flex-1" />
+                    <input
+                      ref={thumbnailInputRef}
+                      type="file"
+                      accept=".jpg,.jpeg,.png,.gif,.webp"
+                      onChange={handleThumbnailUpload}
+                      className="hidden"
+                      id="thumbnail-upload"
+                    />
+                    <Button type="button" variant="outline" onClick={() => thumbnailInputRef.current?.click()} disabled={uploading}>
+                      {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
+                    </Button>
+                  </div>
+                  {form.thumbnail && (
+                    <img src={form.thumbnail} alt="Thumbnail preview" className="mt-2 h-24 rounded object-cover" />
+                  )}
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">

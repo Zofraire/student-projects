@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/src/components/ui/button";
@@ -23,7 +23,7 @@ import {
   TableRow,
 } from "@/src/components/ui/table";
 import { Badge } from "@/src/components/ui/badge";
-import { Plus, Edit, Trash2, ArrowUp, ArrowDown } from "lucide-react";
+import { Plus, Edit, Trash2, Upload, Loader2 } from "lucide-react";
 
 interface Banner {
   id: string;
@@ -39,11 +39,13 @@ export default function AdminBannersPage() {
   const { data: session, status } = useSession();
   const t = useTranslations("adminBanners");
   const tc = useTranslations("common");
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [banners, setBanners] = useState<Banner[]>([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [editingBanner, setEditingBanner] = useState<Banner | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [form, setForm] = useState({
     title: "",
     subtitle: "",
@@ -80,6 +82,35 @@ export default function AdminBannersPage() {
       order: banner.order,
     });
     setShowModal(true);
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const res = await fetch("/api/admin/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setForm((prev) => ({ ...prev, image: data.url }));
+      } else {
+        alert("Failed to upload image");
+      }
+    } catch (error) {
+      console.error("Upload error:", error);
+      alert("Upload failed");
+    } finally {
+      setUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -171,6 +202,7 @@ export default function AdminBannersPage() {
                   <TableRow key={banner.id}>
                     <TableCell>{banner.order}</TableCell>
                     <TableCell>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={banner.image}
                         alt={banner.title}
@@ -232,15 +264,37 @@ export default function AdminBannersPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="image">{t("bannerImage")}</Label>
-              <Input
-                id="image"
-                value={form.image}
-                onChange={(e) => setForm({ ...form, image: e.target.value })}
-                placeholder="https://example.com/banner.jpg"
-                required
-              />
+              <Label>{t("bannerImage")}</Label>
+              <div className="flex gap-2">
+                <Input
+                  value={form.image}
+                  onChange={(e) => setForm({ ...form, image: e.target.value })}
+                  placeholder="https://example.com/banner.jpg"
+                  className="flex-1"
+                />
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept=".jpg,.jpeg,.png,.gif,.webp"
+                  onChange={handleImageUpload}
+                  className="hidden"
+                  id="banner-image-upload"
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={uploading}
+                >
+                  {uploading ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Upload className="h-4 w-4" />
+                  )}
+                </Button>
+              </div>
               {form.image && (
+                /* eslint-disable-next-line @next/next/no-img-element */
                 <img
                   src={form.image}
                   alt="Preview"
@@ -287,7 +341,7 @@ export default function AdminBannersPage() {
               <Button type="button" variant="outline" onClick={() => setShowModal(false)}>
                 {tc("cancel")}
               </Button>
-              <Button type="submit" disabled={submitting}>
+              <Button type="submit" disabled={submitting || uploading}>
                 {submitting ? tc("loading") : tc("save")}
               </Button>
             </DialogFooter>
