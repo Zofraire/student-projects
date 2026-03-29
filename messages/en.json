@@ -66,6 +66,8 @@
     "tagsDesc": "Manage project tags",
     "users": "Users",
     "usersDesc": "Manage users",
+    "banners": "Banners",
+    "bannersDesc": "Manage homepage banners",
     "settings": "Settings",
     "settingsDesc": "Site settings"
   },
@@ -136,6 +138,21 @@
     "hasAccount": "Already have an account?",
     "orContinueWith": "Or continue with",
     "google": "Continue with Google"
+  },
+  "adminBanners": {
+    "title": "Manage Banners",
+    "subtitle": "Manage homepage banners",
+    "addBanner": "Add Banner",
+    "editBanner": "Edit Banner",
+    "deleteBanner": "Delete Banner",
+    "deleteConfirm": "Are you sure you want to delete this banner?",
+    "bannerTitle": "Title",
+    "bannerSubtitle": "Subtitle",
+    "bannerImage": "Image URL",
+    "bannerUrl": "Link URL",
+    "bannerActive": "Active",
+    "bannerOrder": "Display Order",
+    "noBanners": "No banners yet"
   },
   "common": {
     "loading": "Loading...",

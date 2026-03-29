@@ -66,6 +66,8 @@
     "tagsDesc": "Төслийн шошгонуудыг удирдах",
     "users": "Хэрэглэгчид",
     "usersDesc": "Хэрэглэгчдийг удирдах",
+    "banners": "Баннерууд",
+    "bannersDesc": "Нүүр хуудасны баннеруудыг удирдах",
     "settings": "Тохиргоо",
     "settingsDesc": "Сайтын тохиргоо"
   },
@@ -136,6 +138,21 @@
     "hasAccount": "Бүртгэлтэй юу?",
     "orContinueWith": "Эсвэл үргэлжлүүлэх",
     "google": "Google-ээр үргэлжлүүлэх"
+  },
+  "adminBanners": {
+    "title": "Баннеруудыг удирдах",
+    "subtitle": "Нүүр хуудасны баннеруудыг удирдах",
+    "addBanner": "Баннер нэмэх",
+    "editBanner": "Баннер засах",
+    "deleteBanner": "Баннер устгах",
+    "deleteConfirm": "Та энэ баннерыг устгахдаа итгэлтэй байна уу?",
+    "bannerTitle": "Гарчиг",
+    "bannerSubtitle": "Дэд гарчиг",
+    "bannerImage": "Зургийн URL",
+    "bannerUrl": "Холбоосын URL",
+    "bannerActive": "Идэвхтэй",
+    "bannerOrder": "Дарааллын дугаар",
+    "noBanners": "Баннер байхгүй байна"
   },
   "common": {
     "loading": "Ачаалж байна...",

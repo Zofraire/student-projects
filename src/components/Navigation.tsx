@@ -25,6 +25,7 @@ import {
   Home,
   Layers,
   X,
+  Globe,
 } from "lucide-react";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
@@ -45,6 +46,7 @@ export default function Navigation({ locale }: { locale: string }) {
     { href: `/${locale}/admin/projects`, label: t("admin.projects"), icon: Layers },
     { href: `/${locale}/admin/categories`, label: t("admin.categories"), icon: FolderTree },
     { href: `/${locale}/admin/tags`, label: t("admin.tags"), icon: Tag },
+    { href: `/${locale}/admin/banners`, label: t("admin.banners"), icon: Layers },
     { href: `/${locale}/admin/users`, label: t("admin.users"), icon: Users },
   ];
 
@@ -78,6 +80,28 @@ export default function Navigation({ locale }: { locale: string }) {
 
           {/* Right Side */}
           <div className="flex items-center space-x-4">
+            {/* Language Switcher */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm" className="flex items-center gap-1">
+                  <Globe className="h-4 w-4" />
+                  <span className="hidden sm:inline">{locale === "mn" ? "MN" : "EN"}</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem asChild>
+                  <Link href={pathname.replace(`/${locale}`, "/en")} className="flex items-center">
+                    English
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href={pathname.replace(`/${locale}`, "/mn")} className="flex items-center">
+                    Монгол
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
             {status === "loading" ? (
               <div className="h-8 w-8 animate-pulse rounded-full bg-muted" />
             ) : session ? (

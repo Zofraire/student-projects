@@ -8,6 +8,13 @@ import { Badge } from "@/src/components/ui/badge";
 import ProjectCard from "@/src/components/ProjectCard";
 import { ArrowRight, Layers, FolderTree, Sparkles } from "lucide-react";
 
+async function getActiveBanners() {
+  return prisma.banner.findMany({
+    where: { active: true },
+    orderBy: { order: "asc" },
+  });
+}
+
 async function getFeaturedProjects() {
   return prisma.project.findMany({
     where: { active: true, featured: true },
@@ -53,48 +60,90 @@ export default async function HomePage({
 }) {
   const t = await getTranslations({ locale, namespace: "home" });
   
-  const [featuredProjects, recentProjects, categories] = await Promise.all([
+  const [featuredProjects, recentProjects, categories, banners] = await Promise.all([
     getFeaturedProjects(),
     getRecentProjects(),
     getCategories(),
+    getActiveBanners(),
   ]);
 
   return (
     <div className="flex flex-col">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-primary/10 to-background py-20 lg:py-32">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-3xl text-center">
-            <Badge className="mb-4" variant="secondary">
-              <Sparkles className="mr-1 h-3 w-3" />
-              Student Showcase
-            </Badge>
-            <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-              {t("title")}
-            </h1>
-            <p className="mb-8 text-lg text-muted-foreground sm:text-xl">
-              {t("subtitle")}
-            </p>
-            <div className="flex flex-col justify-center gap-4 sm:flex-row">
-              <Link href={`/${locale}/projects`}>
-                <Button size="lg" className="w-full sm:w-auto">
-                  {t("viewAll")}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
-              <Link href={`/${locale}/projects?featured=true`}>
-                <Button size="lg" variant="outline" className="w-full sm:w-auto">
-                  {t("featured")}
-                </Button>
-              </Link>
+      {/* Hero / Banner Section */}
+      {banners.length > 0 ? (
+        <section className="relative overflow-hidden">
+          <div className="relative h-[400px] lg:h-[500px]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={banners[0].image}
+              alt={banners[0].title}
+              className="h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-black/40" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-center text-white px-4">
+                <h1 className="mb-4 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl drop-shadow-lg">
+                  {banners[0].title}
+                </h1>
+                {banners[0].subtitle && (
+                  <p className="mb-8 text-lg sm:text-xl drop-shadow-md">
+                    {banners[0].subtitle}
+                  </p>
+                )}
+                <div className="flex flex-col justify-center gap-4 sm:flex-row">
+                  {banners[0].url ? (
+                    <Link href={banners[0].url}>
+                      <Button size="lg" className="w-full sm:w-auto">
+                        {t("viewAll")}
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </Link>
+                  ) : (
+                    <Link href={`/${locale}/projects`}>
+                      <Button size="lg" className="w-full sm:w-auto">
+                        {t("viewAll")}
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </Link>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        
-        {/* Background decoration */}
-        <div className="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-primary/5 blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-primary/5 blur-3xl" />
-      </section>
+        </section>
+      ) : (
+        <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-primary/10 to-background py-20 lg:py-32">
+          <div className="container mx-auto px-4">
+            <div className="mx-auto max-w-3xl text-center">
+              <Badge className="mb-4" variant="secondary">
+                <Sparkles className="mr-1 h-3 w-3" />
+                Student Showcase
+              </Badge>
+              <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+                {t("title")}
+              </h1>
+              <p className="mb-8 text-lg text-muted-foreground sm:text-xl">
+                {t("subtitle")}
+              </p>
+              <div className="flex flex-col justify-center gap-4 sm:flex-row">
+                <Link href={`/${locale}/projects`}>
+                  <Button size="lg" className="w-full sm:w-auto">
+                    {t("viewAll")}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+                <Link href={`/${locale}/projects?featured=true`}>
+                  <Button size="lg" variant="outline" className="w-full sm:w-auto">
+                    {t("featured")}
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-primary/5 blur-3xl" />
+          <div className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-primary/5 blur-3xl" />
+        </section>
+      )}
 
       {/* Featured Projects */}
       {featuredProjects.length > 0 && (
