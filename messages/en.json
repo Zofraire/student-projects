@@ -211,6 +211,20 @@
     "bannerOrder": "Display Order",
     "noBanners": "No banners yet"
   },
+  "adminUsers": {
+    "title": "Manage Users",
+    "subtitle": "View and manage user accounts",
+    "editRole": "Edit User Role",
+    "deleteConfirm": "Are you sure you want to delete this user?",
+    "tableUser": "User",
+    "tableEmail": "Email",
+    "tableRole": "Role",
+    "tableProjects": "Projects",
+    "tableJoined": "Joined",
+    "tableActions": "Actions",
+    "admin": "Admin",
+    "user": "User"
+  },
   "common": {
     "loading": "Loading...",
     "error": "An error occurred",
