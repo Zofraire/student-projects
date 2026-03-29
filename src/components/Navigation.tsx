@@ -32,22 +32,24 @@ import { usePathname } from "next/navigation";
 
 export default function Navigation({ locale }: { locale: string }) {
   const { data: session, status } = useSession();
-  const t = useTranslations("");
+  const tNav = useTranslations("nav");
+  const tAdmin = useTranslations("admin");
+  const tCommon = useTranslations("common");
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { href: `/${locale}`, label: t("nav.home"), icon: Home },
-    { href: `/${locale}/projects`, label: t("nav.projects"), icon: Layers },
+    { href: `/${locale}`, label: tNav("home"), icon: Home },
+    { href: `/${locale}/projects`, label: tNav("projects"), icon: Layers },
   ];
 
   const adminMenuItems = [
-    { href: `/${locale}/admin`, label: t("admin.dashboard"), icon: LayoutDashboard },
-    { href: `/${locale}/admin/projects`, label: t("admin.projects"), icon: Layers },
-    { href: `/${locale}/admin/categories`, label: t("admin.categories"), icon: FolderTree },
-    { href: `/${locale}/admin/tags`, label: t("admin.tags"), icon: Tag },
-    { href: `/${locale}/admin/banners`, label: t("admin.banners"), icon: Layers },
-    { href: `/${locale}/admin/users`, label: t("admin.users"), icon: Users },
+    { href: `/${locale}/admin`, label: tAdmin("dashboard"), icon: LayoutDashboard },
+    { href: `/${locale}/admin/projects`, label: tAdmin("projects"), icon: Layers },
+    { href: `/${locale}/admin/categories`, label: tAdmin("categories"), icon: FolderTree },
+    { href: `/${locale}/admin/tags`, label: tAdmin("tags"), icon: Tag },
+    { href: `/${locale}/admin/banners`, label: tAdmin("banners"), icon: Layers },
+    { href: `/${locale}/admin/users`, label: tAdmin("users"), icon: Users },
   ];
 
   return (
@@ -122,7 +124,7 @@ export default function Navigation({ locale }: { locale: string }) {
                   {session.user?.role === "ADMIN" && (
                     <>
                       <DropdownMenuLabel className="text-xs text-muted-foreground">
-                        {t("common.administration")}
+                        {tCommon("administration")}
                       </DropdownMenuLabel>
                       {adminMenuItems.map((item) => (
                         <DropdownMenuItem key={item.href} asChild>
@@ -138,7 +140,7 @@ export default function Navigation({ locale }: { locale: string }) {
                   
                   <DropdownMenuItem onClick={() => signOut()}>
                     <LogOut className="mr-2 h-4 w-4" />
-                    {t("nav.signout")}
+                    {tNav("signout")}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -146,11 +148,11 @@ export default function Navigation({ locale }: { locale: string }) {
               <div className="flex items-center space-x-2">
                 <Link href={`/${locale}/auth/signin`}>
                   <Button variant="ghost" size="sm">
-                    {t("nav.signin")}
+                    {tNav("signin")}
                   </Button>
                 </Link>
                 <Link href={`/${locale}/auth/signup`}>
-                  <Button size="sm">{t("nav.signup")}</Button>
+                  <Button size="sm">{tNav("signup")}</Button>
                 </Link>
               </div>
             )}
