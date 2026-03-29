@@ -17,6 +17,7 @@ import { cn } from "@/src/lib/utils";
 
 export default function AdminNavbar({ locale }: { locale: string }) {
   const t = useTranslations("admin");
+  const tn = useTranslations("nav");
   const pathname = usePathname();
 
   const navItems = [
@@ -38,7 +39,7 @@ export default function AdminNavbar({ locale }: { locale: string }) {
               className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
             >
               <Home className="h-4 w-4" />
-              <span>Back to Site</span>
+              <span>{tn("backToSite")}</span>
             </Link>
             <div className="h-4 w-px bg-border" />
             <div className="flex items-center gap-1">

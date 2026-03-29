@@ -12,6 +12,7 @@ import { Layers } from "lucide-react";
 
 export default function SignUpPage({ params: { locale } }: { params: { locale: string } }) {
   const t = useTranslations("auth");
+  const tc = useTranslations("common");
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -26,7 +27,7 @@ export default function SignUpPage({ params: { locale } }: { params: { locale: s
     setError("");
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
+      setError(t("passwordMismatch"));
       setLoading(false);
       return;
     }
@@ -42,10 +43,10 @@ export default function SignUpPage({ params: { locale } }: { params: { locale: s
         router.push(`/${locale}/auth/signin?registered=true`);
       } else {
         const data = await res.json();
-        setError(data.message || "Registration failed");
+        setError(data.message || t("registrationFailed"));
       }
     } catch (err) {
-      setError("An error occurred");
+      setError(tc("error"));
     } finally {
       setLoading(false);
     }
@@ -59,7 +60,7 @@ export default function SignUpPage({ params: { locale } }: { params: { locale: s
             <Layers className="h-6 w-6" />
           </div>
           <CardTitle className="text-2xl">{t("signUp")}</CardTitle>
-          <CardDescription>Create an account to get started</CardDescription>
+          <CardDescription>{t("signUpDesc")}</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -85,7 +86,7 @@ export default function SignUpPage({ params: { locale } }: { params: { locale: s
               <Input id="confirmPassword" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required minLength={6} />
             </div>
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Creating account..." : t("signUp")}
+              {loading ? t("creatingAccount") : t("signUp")}
             </Button>
           </form>
           <p className="mt-6 text-center text-sm text-muted-foreground">

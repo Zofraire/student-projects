@@ -54,8 +54,8 @@ export default function Navigation({ locale }: { locale: string }) {
     <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex md:items-center md:space-x-6">
+          {/* Desktop Navigation - Centered */}
+          <div className="hidden md:flex md:flex-1 md:items-center md:justify-center md:space-x-6">
             {navItems.map((item) => (
               <Link
                 key={item.href}

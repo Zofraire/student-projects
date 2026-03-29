@@ -8,16 +8,20 @@
     "signup": "Бүртгүүлэх",
     "admin": "Админ",
     "profile": "Профайл",
-    "signout": "Гарах"
+    "signout": "Гарах",
+    "backToSite": "Сайт руу буцах"
   },
   "home": {
     "title": "Оюутны төслүүдийн үзэсгэлэн",
     "subtitle": "Авьяаслаг оюутнуудын бүтээсэн шинэлэг төслүүдийг нээж мэдэх",
     "featured": "Онцлох төслүүд",
+    "featuredDesc": "Онцолсон оюутны төслүүд",
     "categories": "Ангилалаар хайх",
     "recentProjects": "Сүүлийн үеийн төслүүд",
+    "recentDesc": "Хамгийн сүүлийн бүтээлүүд",
     "viewAll": "Бүх төслийг харах",
-    "exploreCategories": "Ангилалуудыг судлах"
+    "exploreCategories": "Ангилалуудыг судлах",
+    "studentShowcase": "Оюутны үзэсгэлэн"
   },
   "projects": {
     "title": "Төслүүд",
@@ -33,11 +37,16 @@
     "allCategories": "Бүх ангилал",
     "allTags": "Бүх шошго",
     "noProjects": "Төсөл олдсонгүй",
+    "noProjectsHint": "Шүүлтүүр эсвэл хайлтын нөхцлөө өөрчилж үзнэ үү",
     "clearFilters": "Шүүлтүүр цэвэрлэх",
     "applyFilters": "Шүүлтүүр хэрэглэх",
     "searchPlaceholder": "Төсөл хайх...",
     "viewProject": "Төсөл харах",
-    "by": "зохиогч"
+    "view": "Харах",
+    "by": "зохиогч",
+    "project": "төсөл",
+    "projectPlural": "төсөл",
+    "backToProjects": "Төслүүд рүү буцах"
   },
   "project": {
     "description": "Тайлбар",
@@ -46,6 +55,7 @@
     "documents": "Баримт бичгүүд",
     "models": "3D загварууд",
     "videos": "Видео бичлэгүүд",
+    "video": "Видео",
     "author": "Зохиогч",
     "publishedOn": "Нийтэлсэн огноо",
     "categories": "Ангилалууд",
@@ -53,7 +63,16 @@
     "relatedProjects": "Холбоотой төслүүд",
     "downloadPDF": "PDF татах",
     "fullscreen": "Бүтэн дэлгэц",
-    "exitFullscreen": "Бүтэн дэлгэцээс гарах"
+    "exitFullscreen": "Бүтэн дэлгэцээс гарах",
+    "pdfDocument": "PDF баримт бичиг",
+    "loadingVideo": "Видео ачаалж байна...",
+    "loading3DModel": "3D загвар ачаалж байна...",
+    "errorLoadingModel": "Загвар ачаалахад алдаа гарлаа",
+    "noModelLoaded": "Загвар ачаалагдаагүй",
+    "rotate": "Эргүүлэх",
+    "stop": "Зогсоох",
+    "resetView": "Харагдац шинэчлэх",
+    "modelControls": "Чирж эргүүлэх / Гүйлгэж томруулах / Баруун товч дарж хөдөлгөх"
   },
   "admin": {
     "dashboard": "Хянах самбар",
@@ -69,7 +88,11 @@
     "banners": "Баннерууд",
     "bannersDesc": "Нүүр хуудасны баннеруудыг удирдах",
     "settings": "Тохиргоо",
-    "settingsDesc": "Сайтын тохиргоо"
+    "settingsDesc": "Сайтын тохиргоо",
+    "activeProjects": "Идэвхтэй төслүүд",
+    "activeCategories": "Идэвхтэй ангилалууд",
+    "totalTags": "Нийт шошго",
+    "registeredUsers": "Бүртгэлтэй хэрэглэгчид"
   },
   "adminProjects": {
     "title": "Төслүүдийг удирдах",
@@ -90,17 +113,33 @@
     "projectFeatured": "Онцлох",
     "projectActive": "Идэвхтэй",
     "projectMedia": "Медиа файлууд",
+    "projectDetails": "Төслийн дэлгэрэнгүй",
     "addMedia": "Медиа нэмэх",
     "mediaType": "Медиа төрөл",
     "mediaUrl": "URL",
     "mediaTitle": "Гарчиг",
     "uploadFile": "Файл байршуулах",
+    "uploadFiles": "Файл байршуулах",
+    "uploading": "Байршуулж байна...",
+    "clickToUpload": "Файл сонгох эсвэл чирж оруулах",
+    "supportedFormats": "Зураг (JPG, PNG, GIF) / PDF / 3D загвар (FBX, OBJ, GLB, GLTF) / Видео (MP4, WebM)",
+    "addVideoUrl": "Видео URL нэмэх (YouTube, Vimeo, эсвэл шууд холбоос)",
+    "addVideo": "Видео нэмэх",
+    "new": "Шинэ",
     "save": "Хадгалах",
+    "saveProject": "Төсөл хадгалах",
     "cancel": "Цуцлах",
     "saving": "Хадгалж байна...",
     "created": "Төсөл амжилттай үүсгэгдлээ",
     "updated": "Төсөл амжилттай шинэчлэгдлээ",
-    "deleted": "Төсөл амжилттай устгагдлаа"
+    "deleted": "Төсөл амжилттай устгагдлаа",
+    "tableTitle": "Гарчиг",
+    "tableAuthor": "Зохиогч",
+    "tableCategories": "Ангилалууд",
+    "tableMedia": "Медиа",
+    "tableStatus": "Төлөв",
+    "tableActions": "Үйлдлүүд",
+    "preview": "Урьдчилан харах"
   },
   "adminCategories": {
     "title": "Ангилалуудыг удирдах",
@@ -113,7 +152,12 @@
     "categorySlug": "Слаг",
     "parentCategory": "Эцэг ангилал",
     "noParent": "Эцэг ангилалгүй (Дээд түвшин)",
-    "subcategories": "Дэд ангилалууд"
+    "subcategories": "Дэд ангилалууд",
+    "tableName": "Нэр",
+    "tableSlug": "Слаг",
+    "tableParent": "Эцэг ангилал",
+    "tableSubcategories": "Дэд ангилалууд",
+    "tableActions": "Үйлдлүүд"
   },
   "adminTags": {
     "title": "Шошгонуудыг удирдах",
@@ -124,11 +168,18 @@
     "deleteConfirm": "Та энэ шошгыг устгахдаа итгэлтэй байна уу?",
     "tagName": "Нэр",
     "tagSlug": "Слаг",
-    "tagColor": "Өнгө"
+    "tagColor": "Өнгө",
+    "tableName": "Нэр",
+    "tableSlug": "Слаг",
+    "tablePreview": "Урьдчилан харах",
+    "tableActions": "Үйлдлүүд",
+    "tagNamePlaceholder": "Шошгоны нэр"
   },
   "auth": {
     "signIn": "Нэвтрэх",
+    "signInDesc": "Бүртгэлдээ нэвтрэх",
     "signUp": "Бүртгүүлэх",
+    "signUpDesc": "Шинэ бүртгэл үүсгэх",
     "email": "Имэйл",
     "password": "Нууц үг",
     "confirmPassword": "Нууц үг баталгаажуулах",
@@ -137,7 +188,12 @@
     "noAccount": "Бүртгэл байхгүй юу?",
     "hasAccount": "Бүртгэлтэй юу?",
     "orContinueWith": "Эсвэл үргэлжлүүлэх",
-    "google": "Google-ээр үргэлжлүүлэх"
+    "google": "Google-ээр үргэлжлүүлэх",
+    "signingIn": "Нэвтэрч байна...",
+    "creatingAccount": "Бүртгэл үүсгэж байна...",
+    "invalidCredentials": "Имэйл эсвэл нууц үг буруу байна",
+    "passwordMismatch": "Нууц үг таарахгүй байна",
+    "registrationFailed": "Бүртгэл амжилтгүй боллоо"
   },
   "adminBanners": {
     "title": "Баннеруудыг удирдах",
@@ -148,7 +204,7 @@
     "deleteConfirm": "Та энэ баннерыг устгахдаа итгэлтэй байна уу?",
     "bannerTitle": "Гарчиг",
     "bannerSubtitle": "Дэд гарчиг",
-    "bannerImage": "Зургийн URL",
+    "bannerImage": "Зураг",
     "bannerUrl": "Холбоосын URL",
     "bannerActive": "Идэвхтэй",
     "bannerOrder": "Дарааллын дугаар",
@@ -171,7 +227,8 @@
     "featured": "Онцлох",
     "back": "Буцах",
     "next": "Дараах",
-    "previous": "Өмнөх"
+    "previous": "Өмнөх",
+    "administration": "Удирдлага"
   },
   "footer": {
     "title": "Оюутны төслүүд",

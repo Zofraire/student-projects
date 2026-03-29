@@ -84,6 +84,7 @@ export default async function ProjectPage({
   params: { locale: string; slug: string };
 }) {
   const t = await getTranslations({ locale, namespace: "project" });
+  const tp = await getTranslations({ locale, namespace: "projects" });
   const project = await getProject(slug);
 
   const categoryIds = project.categories.map((c) => c.id);
@@ -103,7 +104,7 @@ export default async function ProjectPage({
       <Link href={`/${locale}/projects`} className="mb-6 inline-block">
         <Button variant="ghost" className="gap-2">
           <ArrowLeft className="h-4 w-4" />
-          Back to Projects
+          {tp("backToProjects")}
         </Button>
       </Link>
 
@@ -277,7 +278,7 @@ export default async function ProjectPage({
                         <VideoPlayer
                           key={video.id}
                           url={video.url}
-                          title={video.title || "Video"}
+                          title={video.title || t("video")}
                           platform={video.videoPlatform || undefined}
                         />
                       ))}

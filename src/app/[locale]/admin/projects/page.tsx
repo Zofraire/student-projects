@@ -305,7 +305,7 @@ export default function AdminProjectsPage() {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this project?")) return;
+    if (!confirm(t("deleteConfirm"))) return;
 
     try {
       const res = await fetch("/api/admin/projects", {
@@ -359,7 +359,9 @@ export default function AdminProjectsPage() {
     }
   };
 
-  if (status === "loading" || loading) return <div className="p-4">Loading...</div>;
+  const tc = useTranslations("common");
+
+  if (status === "loading" || loading) return <div className="p-4">{tc("loading")}</div>;
 
   return (
     <div>
@@ -387,12 +389,12 @@ export default function AdminProjectsPage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Title</TableHead>
-                <TableHead>Author</TableHead>
-                <TableHead>Categories</TableHead>
-                <TableHead>Media</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Actions</TableHead>
+                <TableHead>{t("tableTitle")}</TableHead>
+                <TableHead>{t("tableAuthor")}</TableHead>
+                <TableHead>{t("tableCategories")}</TableHead>
+                <TableHead>{t("tableMedia")}</TableHead>
+                <TableHead>{t("tableStatus")}</TableHead>
+                <TableHead>{t("tableActions")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -422,7 +424,7 @@ export default function AdminProjectsPage() {
                     </div>
                   </TableCell>
                   <TableCell>
-                    <Badge variant={project.active ? "default" : "secondary"}>{project.active ? "Active" : "Inactive"}</Badge>
+                    <Badge variant={project.active ? "default" : "secondary"}>{project.active ? tc("active") : tc("inactive")}</Badge>
                   </TableCell>
                   <TableCell>
                     <div className="flex gap-2">
@@ -446,8 +448,8 @@ export default function AdminProjectsPage() {
           
           <Tabs defaultValue="details" className="w-full">
             <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="details">Project Details</TabsTrigger>
-              <TabsTrigger value="media">Media Files ({mediaItems.length})</TabsTrigger>
+              <TabsTrigger value="details">{t("projectDetails")}</TabsTrigger>
+              <TabsTrigger value="media">{t("projectMedia")} ({mediaItems.length})</TabsTrigger>
             </TabsList>
 
             <TabsContent value="details">
@@ -568,7 +570,7 @@ export default function AdminProjectsPage() {
               {/* File Upload Section */}
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-lg">Upload Files</CardTitle>
+                  <CardTitle className="text-lg">{t("uploadFiles")}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="border-2 border-dashed rounded-lg p-6 text-center">
@@ -589,10 +591,10 @@ export default function AdminProjectsPage() {
                           <Upload className="h-8 w-8 text-muted-foreground" />
                         )}
                         <span className="text-sm text-muted-foreground">
-                          {uploading ? "Uploading..." : "Click to upload or drag and drop"}
+                          {uploading ? t("uploading") : t("clickToUpload")}
                         </span>
                         <span className="text-xs text-muted-foreground">
-                          Images (JPG, PNG, GIF) • PDFs • 3D Models (FBX, OBJ, GLB, GLTF) • Videos (MP4, WebM)
+                          {t("supportedFormats")}
                         </span>
                       </div>
                     </label>
@@ -601,12 +603,12 @@ export default function AdminProjectsPage() {
                   {/* Video URL Input */}
                   <div className="flex gap-2">
                     <Input
-                      placeholder="Add video URL (YouTube, Vimeo, or direct link)"
+                      placeholder={t("addVideoUrl")}
                       value={videoUrl}
                       onChange={(e) => setVideoUrl(e.target.value)}
                     />
                     <Button type="button" onClick={handleAddVideoUrl} disabled={!videoUrl.trim()}>
-                      <Plus className="h-4 w-4 mr-1" /> Add Video
+                      <Plus className="h-4 w-4 mr-1" /> {t("addVideo")}
                     </Button>
                   </div>
                 </CardContent>
@@ -616,7 +618,7 @@ export default function AdminProjectsPage() {
               {mediaItems.length > 0 && (
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">Media Files ({mediaItems.length})</CardTitle>
+                    <CardTitle className="text-lg">{t("projectMedia")} ({mediaItems.length})</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-3">
@@ -628,7 +630,7 @@ export default function AdminProjectsPage() {
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2">
                               <Badge variant="outline" className="text-xs">{item.type}</Badge>
-                              {item.isNew && <Badge className="text-xs bg-green-500">New</Badge>}
+                              {item.isNew && <Badge className="text-xs bg-green-500">{t("new")}</Badge>}
                             </div>
                             <p className="text-sm truncate mt-1">{item.filename}</p>
                             <Input
@@ -658,9 +660,9 @@ export default function AdminProjectsPage() {
               )}
 
               <DialogFooter>
-                <Button type="button" variant="outline" onClick={() => setShowModal(false)}>Cancel</Button>
+                <Button type="button" variant="outline" onClick={() => setShowModal(false)}>{t("cancel")}</Button>
                 <Button onClick={handleSubmit} disabled={submitting}>
-                  {submitting ? "Saving..." : "Save Project"}
+                  {submitting ? t("saving") : t("saveProject")}
                 </Button>
               </DialogFooter>
             </TabsContent>

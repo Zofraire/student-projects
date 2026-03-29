@@ -13,6 +13,7 @@ import { Layers } from "lucide-react";
 
 export default function SignInPage({ params: { locale } }: { params: { locale: string } }) {
   const t = useTranslations("auth");
+  const tc = useTranslations("common");
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,13 +33,13 @@ export default function SignInPage({ params: { locale } }: { params: { locale: s
       });
 
       if (result?.error) {
-        setError("Invalid email or password");
+        setError(t("invalidCredentials"));
       } else {
         router.push(`/${locale}`);
         router.refresh();
       }
     } catch (err) {
-      setError("An error occurred");
+      setError(tc("error"));
     } finally {
       setLoading(false);
     }
@@ -56,7 +57,7 @@ export default function SignInPage({ params: { locale } }: { params: { locale: s
             <Layers className="h-6 w-6" />
           </div>
           <CardTitle className="text-2xl">{t("signIn")}</CardTitle>
-          <CardDescription>Sign in to access your account</CardDescription>
+          <CardDescription>{t("signInDesc")}</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -86,7 +87,7 @@ export default function SignInPage({ params: { locale } }: { params: { locale: s
               />
             </div>
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Signing in..." : t("signIn")}
+              {loading ? t("signingIn") : t("signIn")}
             </Button>
           </form>
 

@@ -75,7 +75,9 @@ export default function AdminTagsPage() {
 
   const filteredTags = tags.filter((t) => t.name.toLowerCase().includes(searchTerm.toLowerCase()));
 
-  if (status === "loading" || loading) return <div className="p-4">Loading...</div>;
+  const tc = useTranslations("common");
+
+  if (status === "loading" || loading) return <div className="p-4">{tc("loading")}</div>;
 
   return (
     <div>
@@ -103,10 +105,10 @@ export default function AdminTagsPage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Slug</TableHead>
-                <TableHead>Preview</TableHead>
-                <TableHead>Actions</TableHead>
+                <TableHead>{t("tableName")}</TableHead>
+                <TableHead>{t("tableSlug")}</TableHead>
+                <TableHead>{t("tablePreview")}</TableHead>
+                <TableHead>{t("tableActions")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -154,14 +156,14 @@ export default function AdminTagsPage() {
               </div>
             </div>
             <div className="pt-2">
-              <Label>Preview</Label>
+              <Label>{t("tablePreview")}</Label>
               <div className="mt-2">
-                <Badge style={{ backgroundColor: form.color, borderColor: form.color }}>{form.name || "Tag Name"}</Badge>
+                <Badge style={{ backgroundColor: form.color, borderColor: form.color }}>{form.name || t("tagNamePlaceholder")}</Badge>
               </div>
             </div>
             <DialogFooter>
-              <Button type="button" variant="outline" onClick={() => setShowModal(false)}>Cancel</Button>
-              <Button type="submit" disabled={submitting}>{submitting ? "Saving..." : "Save"}</Button>
+              <Button type="button" variant="outline" onClick={() => setShowModal(false)}>{tc("cancel")}</Button>
+              <Button type="submit" disabled={submitting}>{submitting ? tc("loading") : tc("save")}</Button>
             </DialogFooter>
           </form>
         </DialogContent>

@@ -117,7 +117,7 @@ export default async function HomePage({
             <div className="mx-auto max-w-3xl text-center">
               <Badge className="mb-4" variant="secondary">
                 <Sparkles className="mr-1 h-3 w-3" />
-                Student Showcase
+                {t("studentShowcase")}
               </Badge>
               <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
                 {t("title")}
@@ -153,12 +153,12 @@ export default async function HomePage({
               <div>
                 <h2 className="text-3xl font-bold">{t("featured")}</h2>
                 <p className="mt-1 text-muted-foreground">
-                  Highlighted student projects
+                  {t("featuredDesc")}
                 </p>
               </div>
               <Link href={`/${locale}/projects?featured=true`}>
                 <Button variant="ghost">
-                  View all
+                  {t("viewAll")}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
@@ -234,7 +234,7 @@ export default async function HomePage({
               <div>
                 <h2 className="text-3xl font-bold">{t("recentProjects")}</h2>
                 <p className="mt-1 text-muted-foreground">
-                  Latest student work
+                  {t("recentDesc")}
                 </p>
               </div>
               <Link href={`/${locale}/projects`}>

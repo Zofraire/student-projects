@@ -101,7 +101,7 @@ export default async function ProjectsPage({
         {/* Projects Grid */}
         <div className="flex-1">
           <div className="mb-4 text-sm text-muted-foreground">
-            {projects.length} {projects.length === 1 ? "project" : "projects"} found
+            {projects.length} {projects.length === 1 ? t("project") : t("projectPlural")}
           </div>
           <ProjectGrid projects={projects as any} locale={locale} />
         </div>

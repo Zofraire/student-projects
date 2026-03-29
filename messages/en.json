@@ -8,16 +8,20 @@
     "signup": "Sign Up",
     "admin": "Admin",
     "profile": "Profile",
-    "signout": "Sign Out"
+    "signout": "Sign Out",
+    "backToSite": "Back to Site"
   },
   "home": {
     "title": "Student Projects Showcase",
     "subtitle": "Discover innovative projects created by talented students",
     "featured": "Featured Projects",
+    "featuredDesc": "Highlighted student projects",
     "categories": "Browse by Category",
     "recentProjects": "Recent Projects",
+    "recentDesc": "Latest student work",
     "viewAll": "View All Projects",
-    "exploreCategories": "Explore Categories"
+    "exploreCategories": "Explore Categories",
+    "studentShowcase": "Student Showcase"
   },
   "projects": {
     "title": "Projects",
@@ -33,11 +37,16 @@
     "allCategories": "All Categories",
     "allTags": "All Tags",
     "noProjects": "No projects found",
+    "noProjectsHint": "Try adjusting your filters or search criteria",
     "clearFilters": "Clear Filters",
     "applyFilters": "Apply Filters",
     "searchPlaceholder": "Search projects...",
     "viewProject": "View Project",
-    "by": "by"
+    "view": "View",
+    "by": "by",
+    "project": "project",
+    "projectPlural": "projects",
+    "backToProjects": "Back to Projects"
   },
   "project": {
     "description": "Description",
@@ -46,6 +55,7 @@
     "documents": "Documents",
     "models": "3D Models",
     "videos": "Videos",
+    "video": "Video",
     "author": "Author",
     "publishedOn": "Published on",
     "categories": "Categories",
@@ -53,7 +63,16 @@
     "relatedProjects": "Related Projects",
     "downloadPDF": "Download PDF",
     "fullscreen": "Fullscreen",
-    "exitFullscreen": "Exit Fullscreen"
+    "exitFullscreen": "Exit Fullscreen",
+    "pdfDocument": "PDF Document",
+    "loadingVideo": "Loading video...",
+    "loading3DModel": "Loading 3D model...",
+    "errorLoadingModel": "Error loading model",
+    "noModelLoaded": "No model loaded",
+    "rotate": "Rotate",
+    "stop": "Stop",
+    "resetView": "Reset View",
+    "modelControls": "Drag to rotate / Scroll to zoom / Right-click to pan"
   },
   "admin": {
     "dashboard": "Dashboard",
@@ -69,7 +88,11 @@
     "banners": "Banners",
     "bannersDesc": "Manage homepage banners",
     "settings": "Settings",
-    "settingsDesc": "Site settings"
+    "settingsDesc": "Site settings",
+    "activeProjects": "Active projects",
+    "activeCategories": "Active categories",
+    "totalTags": "Total tags",
+    "registeredUsers": "Registered users"
   },
   "adminProjects": {
     "title": "Manage Projects",
@@ -90,17 +113,33 @@
     "projectFeatured": "Featured",
     "projectActive": "Active",
     "projectMedia": "Media Files",
+    "projectDetails": "Project Details",
     "addMedia": "Add Media",
     "mediaType": "Media Type",
     "mediaUrl": "URL",
     "mediaTitle": "Title",
     "uploadFile": "Upload File",
+    "uploadFiles": "Upload Files",
+    "uploading": "Uploading...",
+    "clickToUpload": "Click to upload or drag and drop",
+    "supportedFormats": "Images (JPG, PNG, GIF) / PDFs / 3D Models (FBX, OBJ, GLB, GLTF) / Videos (MP4, WebM)",
+    "addVideoUrl": "Add video URL (YouTube, Vimeo, or direct link)",
+    "addVideo": "Add Video",
+    "new": "New",
     "save": "Save",
+    "saveProject": "Save Project",
     "cancel": "Cancel",
     "saving": "Saving...",
     "created": "Project created successfully",
     "updated": "Project updated successfully",
-    "deleted": "Project deleted successfully"
+    "deleted": "Project deleted successfully",
+    "tableTitle": "Title",
+    "tableAuthor": "Author",
+    "tableCategories": "Categories",
+    "tableMedia": "Media",
+    "tableStatus": "Status",
+    "tableActions": "Actions",
+    "preview": "Preview"
   },
   "adminCategories": {
     "title": "Manage Categories",
@@ -113,7 +152,12 @@
     "categorySlug": "Slug",
     "parentCategory": "Parent Category",
     "noParent": "No Parent (Top Level)",
-    "subcategories": "Subcategories"
+    "subcategories": "Subcategories",
+    "tableName": "Name",
+    "tableSlug": "Slug",
+    "tableParent": "Parent",
+    "tableSubcategories": "Subcategories",
+    "tableActions": "Actions"
   },
   "adminTags": {
     "title": "Manage Tags",
@@ -124,11 +168,18 @@
     "deleteConfirm": "Are you sure you want to delete this tag?",
     "tagName": "Name",
     "tagSlug": "Slug",
-    "tagColor": "Color"
+    "tagColor": "Color",
+    "tableName": "Name",
+    "tableSlug": "Slug",
+    "tablePreview": "Preview",
+    "tableActions": "Actions",
+    "tagNamePlaceholder": "Tag Name"
   },
   "auth": {
     "signIn": "Sign In",
+    "signInDesc": "Sign in to access your account",
     "signUp": "Sign Up",
+    "signUpDesc": "Create an account to get started",
     "email": "Email",
     "password": "Password",
     "confirmPassword": "Confirm Password",
@@ -137,7 +188,12 @@
     "noAccount": "Don't have an account?",
     "hasAccount": "Already have an account?",
     "orContinueWith": "Or continue with",
-    "google": "Continue with Google"
+    "google": "Continue with Google",
+    "signingIn": "Signing in...",
+    "creatingAccount": "Creating account...",
+    "invalidCredentials": "Invalid email or password",
+    "passwordMismatch": "Passwords do not match",
+    "registrationFailed": "Registration failed"
   },
   "adminBanners": {
     "title": "Manage Banners",
@@ -148,7 +204,7 @@
     "deleteConfirm": "Are you sure you want to delete this banner?",
     "bannerTitle": "Title",
     "bannerSubtitle": "Subtitle",
-    "bannerImage": "Image URL",
+    "bannerImage": "Image",
     "bannerUrl": "Link URL",
     "bannerActive": "Active",
     "bannerOrder": "Display Order",
@@ -171,7 +227,8 @@
     "featured": "Featured",
     "back": "Back",
     "next": "Next",
-    "previous": "Previous"
+    "previous": "Previous",
+    "administration": "Administration"
   },
   "footer": {
     "title": "Student Projects",
