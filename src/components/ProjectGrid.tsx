@@ -33,7 +33,7 @@ export default function ProjectGrid({ projects, locale }: ProjectGridProps) {
         </div>
         <h3 className="mb-2 text-lg font-semibold">{t("noProjects")}</h3>
         <p className="text-sm text-muted-foreground">
-          Try adjusting your filters or search criteria
+          {t("noProjectsHint")}
         </p>
       </div>
     );

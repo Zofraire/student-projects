@@ -11,11 +11,13 @@ import {
   Users,
   Settings,
   Home,
+  Image,
 } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 
 export default function AdminNavbar({ locale }: { locale: string }) {
   const t = useTranslations("admin");
+  const tn = useTranslations("nav");
   const pathname = usePathname();
 
   const navItems = [
@@ -23,6 +25,7 @@ export default function AdminNavbar({ locale }: { locale: string }) {
     { href: `/${locale}/admin/projects`, label: t("projects"), icon: Layers },
     { href: `/${locale}/admin/categories`, label: t("categories"), icon: FolderTree },
     { href: `/${locale}/admin/tags`, label: t("tags"), icon: Tag },
+    { href: `/${locale}/admin/banners`, label: t("banners"), icon: Image },
     { href: `/${locale}/admin/users`, label: t("users"), icon: Users },
   ];
 
@@ -36,7 +39,7 @@ export default function AdminNavbar({ locale }: { locale: string }) {
               className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
             >
               <Home className="h-4 w-4" />
-              <span>Back to Site</span>
+              <span>{tn("backToSite")}</span>
             </Link>
             <div className="h-4 w-px bg-border" />
             <div className="flex items-center gap-1">

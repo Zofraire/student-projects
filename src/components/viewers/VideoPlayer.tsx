@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import ReactPlayer from "react-player";
 import { Button } from "@/src/components/ui/button";
 import { Maximize2, ExternalLink } from "lucide-react";
@@ -12,6 +13,7 @@ interface VideoPlayerProps {
 }
 
 export default function VideoPlayer({ url, title, platform }: VideoPlayerProps) {
+  const t = useTranslations("project");
   const [isReady, setIsReady] = useState(false);
 
   // Determine if URL is from a supported platform
@@ -23,7 +25,7 @@ export default function VideoPlayer({ url, title, platform }: VideoPlayerProps) 
       {/* Header */}
       <div className="flex items-center justify-between border-b bg-muted/50 px-4 py-2">
         <div className="flex items-center gap-2">
-          <h3 className="text-sm font-medium">{title || "Video"}</h3>
+          <h3 className="text-sm font-medium">{title || t("video")}</h3>
           {(isYouTube || isVimeo) && (
             <span className="rounded bg-primary/10 px-2 py-0.5 text-xs text-primary">
               {isYouTube ? "YouTube" : "Vimeo"}
@@ -45,7 +47,7 @@ export default function VideoPlayer({ url, title, platform }: VideoPlayerProps) 
           <div className="absolute inset-0 flex items-center justify-center bg-muted">
             <div className="flex flex-col items-center gap-2">
               <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-              <p className="text-sm text-muted-foreground">Loading video...</p>
+              <p className="text-sm text-muted-foreground">{t("loadingVideo")}</p>
             </div>
           </div>
         )}

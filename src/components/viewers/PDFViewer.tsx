@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/src/components/ui/button";
 import { ChevronLeft, ChevronRight, ZoomIn, ZoomOut, Download, Maximize2 } from "lucide-react";
 
@@ -10,6 +11,7 @@ interface PDFViewerProps {
 }
 
 export default function PDFViewer({ url, title }: PDFViewerProps) {
+  const t = useTranslations("project");
   const [scale, setScale] = useState(1);
 
   const handleZoomIn = () => setScale((prev) => Math.min(prev + 0.25, 3));
@@ -20,7 +22,7 @@ export default function PDFViewer({ url, title }: PDFViewerProps) {
       {/* Toolbar */}
       <div className="flex items-center justify-between border-b bg-muted/50 px-4 py-2">
         <div className="flex items-center gap-2">
-          <h3 className="text-sm font-medium">{title || "PDF Document"}</h3>
+          <h3 className="text-sm font-medium">{title || t("pdfDocument")}</h3>
         </div>
         <div className="flex items-center gap-1">
           <Button variant="ghost" size="icon" onClick={handleZoomOut} disabled={scale <= 0.5}>
@@ -50,7 +52,7 @@ export default function PDFViewer({ url, title }: PDFViewerProps) {
           src={`${url}#toolbar=0&navpanes=0&scrollbar=1&view=FitH`}
           className="h-full w-full"
           style={{ transform: `scale(${scale})`, transformOrigin: "top left" }}
-          title={title || "PDF Document"}
+          title={title || t("pdfDocument")}
         />
       </div>
     </div>

@@ -87,7 +87,9 @@ export default function AdminCategoriesPage() {
   const parentCategories = categories.filter(c => !c.parentId);
   const filteredCategories = categories.filter((c) => c.name.toLowerCase().includes(searchTerm.toLowerCase()));
 
-  if (status === "loading" || loading) return <div className="p-4">Loading...</div>;
+  const tc = useTranslations("common");
+
+  if (status === "loading" || loading) return <div className="p-4">{tc("loading")}</div>;
 
   return (
     <div>
@@ -104,10 +106,10 @@ export default function AdminCategoriesPage() {
       <Card>
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle>Categories ({filteredCategories.length})</CardTitle>
+            <CardTitle>{t("title")} ({filteredCategories.length})</CardTitle>
             <div className="relative w-64">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input placeholder="Search..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="pl-9" />
+              <Input placeholder={tc("search")} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="pl-9" />
             </div>
           </div>
         </CardHeader>
@@ -115,11 +117,11 @@ export default function AdminCategoriesPage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Slug</TableHead>
-                <TableHead>Parent</TableHead>
-                <TableHead>Subcategories</TableHead>
-                <TableHead>Actions</TableHead>
+                <TableHead>{t("tableName")}</TableHead>
+                <TableHead>{t("tableSlug")}</TableHead>
+                <TableHead>{t("tableParent")}</TableHead>
+                <TableHead>{t("tableSubcategories")}</TableHead>
+                <TableHead>{t("tableActions")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -168,8 +170,8 @@ export default function AdminCategoriesPage() {
               </Select>
             </div>
             <DialogFooter>
-              <Button type="button" variant="outline" onClick={() => setShowModal(false)}>Cancel</Button>
-              <Button type="submit" disabled={submitting}>{submitting ? "Saving..." : "Save"}</Button>
+              <Button type="button" variant="outline" onClick={() => setShowModal(false)}>{tc("cancel")}</Button>
+              <Button type="submit" disabled={submitting}>{submitting ? tc("loading") : tc("save")}</Button>
             </DialogFooter>
           </form>
         </DialogContent>

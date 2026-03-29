@@ -25,43 +25,39 @@ import {
   Home,
   Layers,
   X,
+  Globe,
 } from "lucide-react";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 
 export default function Navigation({ locale }: { locale: string }) {
   const { data: session, status } = useSession();
-  const t = useTranslations("");
+  const tNav = useTranslations("nav");
+  const tAdmin = useTranslations("admin");
+  const tCommon = useTranslations("common");
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { href: `/${locale}`, label: t("nav.home"), icon: Home },
-    { href: `/${locale}/projects`, label: t("nav.projects"), icon: Layers },
+    { href: `/${locale}`, label: tNav("home"), icon: Home },
+    { href: `/${locale}/projects`, label: tNav("projects"), icon: Layers },
   ];
 
   const adminMenuItems = [
-    { href: `/${locale}/admin`, label: t("admin.dashboard"), icon: LayoutDashboard },
-    { href: `/${locale}/admin/projects`, label: t("admin.projects"), icon: Layers },
-    { href: `/${locale}/admin/categories`, label: t("admin.categories"), icon: FolderTree },
-    { href: `/${locale}/admin/tags`, label: t("admin.tags"), icon: Tag },
-    { href: `/${locale}/admin/users`, label: t("admin.users"), icon: Users },
+    { href: `/${locale}/admin`, label: tAdmin("dashboard"), icon: LayoutDashboard },
+    { href: `/${locale}/admin/projects`, label: tAdmin("projects"), icon: Layers },
+    { href: `/${locale}/admin/categories`, label: tAdmin("categories"), icon: FolderTree },
+    { href: `/${locale}/admin/tags`, label: tAdmin("tags"), icon: Tag },
+    { href: `/${locale}/admin/banners`, label: tAdmin("banners"), icon: Layers },
+    { href: `/${locale}/admin/users`, label: tAdmin("users"), icon: Users },
   ];
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
-          <Link href={`/${locale}`} className="flex items-center space-x-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              <Layers className="h-5 w-5" />
-            </div>
-            <span className="hidden font-bold sm:inline-block">Student Projects</span>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex md:items-center md:space-x-6">
+          {/* Desktop Navigation - Centered */}
+          <div className="hidden md:flex md:flex-1 md:items-center md:justify-center md:space-x-6">
             {navItems.map((item) => (
               <Link
                 key={item.href}
@@ -78,6 +74,28 @@ export default function Navigation({ locale }: { locale: string }) {
 
           {/* Right Side */}
           <div className="flex items-center space-x-4">
+            {/* Language Switcher */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm" className="flex items-center gap-1">
+                  <Globe className="h-4 w-4" />
+                  <span className="hidden sm:inline">{locale === "mn" ? "MN" : "EN"}</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem asChild>
+                  <Link href={pathname.replace(`/${locale}`, "/en")} className="flex items-center">
+                    English
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href={pathname.replace(`/${locale}`, "/mn")} className="flex items-center">
+                    Монгол
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
             {status === "loading" ? (
               <div className="h-8 w-8 animate-pulse rounded-full bg-muted" />
             ) : session ? (
@@ -106,7 +124,7 @@ export default function Navigation({ locale }: { locale: string }) {
                   {session.user?.role === "ADMIN" && (
                     <>
                       <DropdownMenuLabel className="text-xs text-muted-foreground">
-                        {t("common.administration")}
+                        {tCommon("administration")}
                       </DropdownMenuLabel>
                       {adminMenuItems.map((item) => (
                         <DropdownMenuItem key={item.href} asChild>
@@ -122,7 +140,7 @@ export default function Navigation({ locale }: { locale: string }) {
                   
                   <DropdownMenuItem onClick={() => signOut()}>
                     <LogOut className="mr-2 h-4 w-4" />
-                    {t("nav.signout")}
+                    {tNav("signout")}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -130,11 +148,11 @@ export default function Navigation({ locale }: { locale: string }) {
               <div className="flex items-center space-x-2">
                 <Link href={`/${locale}/auth/signin`}>
                   <Button variant="ghost" size="sm">
-                    {t("nav.signin")}
+                    {tNav("signin")}
                   </Button>
                 </Link>
                 <Link href={`/${locale}/auth/signup`}>
-                  <Button size="sm">{t("nav.signup")}</Button>
+                  <Button size="sm">{tNav("signup")}</Button>
                 </Link>
               </div>
             )}

@@ -56,6 +56,7 @@ export default function AdminProjectsPage() {
   const router = useRouter();
   const t = useTranslations("adminProjects");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const thumbnailInputRef = useRef<HTMLInputElement>(null);
 
   const [projects, setProjects] = useState<Project[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -169,6 +170,35 @@ export default function AdminProjectsPage() {
     }
   };
 
+  const handleThumbnailUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const res = await fetch("/api/admin/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setForm((prev) => ({ ...prev, thumbnail: data.url }));
+      } else {
+        alert("Failed to upload thumbnail");
+      }
+    } catch (error) {
+      console.error("Upload error:", error);
+      alert("Upload failed");
+    } finally {
+      setUploading(false);
+      if (thumbnailInputRef.current) thumbnailInputRef.current.value = "";
+    }
+  };
+
   const handleAddVideoUrl = () => {
     if (!videoUrl.trim()) return;
 
@@ -275,7 +305,7 @@ export default function AdminProjectsPage() {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this project?")) return;
+    if (!confirm(t("deleteConfirm"))) return;
 
     try {
       const res = await fetch("/api/admin/projects", {
@@ -329,7 +359,9 @@ export default function AdminProjectsPage() {
     }
   };
 
-  if (status === "loading" || loading) return <div className="p-4">Loading...</div>;
+  const tc = useTranslations("common");
+
+  if (status === "loading" || loading) return <div className="p-4">{tc("loading")}</div>;
 
   return (
     <div>
@@ -346,10 +378,10 @@ export default function AdminProjectsPage() {
       <Card>
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle>Projects ({filteredProjects.length})</CardTitle>
+            <CardTitle>{t("title")} ({filteredProjects.length})</CardTitle>
             <div className="relative w-64">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input placeholder="Search..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="pl-9" />
+              <Input placeholder={tc("search")} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="pl-9" />
             </div>
           </div>
         </CardHeader>
@@ -357,12 +389,12 @@ export default function AdminProjectsPage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Title</TableHead>
-                <TableHead>Author</TableHead>
-                <TableHead>Categories</TableHead>
-                <TableHead>Media</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Actions</TableHead>
+                <TableHead>{t("tableTitle")}</TableHead>
+                <TableHead>{t("tableAuthor")}</TableHead>
+                <TableHead>{t("tableCategories")}</TableHead>
+                <TableHead>{t("tableMedia")}</TableHead>
+                <TableHead>{t("tableStatus")}</TableHead>
+                <TableHead>{t("tableActions")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -392,7 +424,7 @@ export default function AdminProjectsPage() {
                     </div>
                   </TableCell>
                   <TableCell>
-                    <Badge variant={project.active ? "default" : "secondary"}>{project.active ? "Active" : "Inactive"}</Badge>
+                    <Badge variant={project.active ? "default" : "secondary"}>{project.active ? tc("active") : tc("inactive")}</Badge>
                   </TableCell>
                   <TableCell>
                     <div className="flex gap-2">
@@ -416,8 +448,8 @@ export default function AdminProjectsPage() {
           
           <Tabs defaultValue="details" className="w-full">
             <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="details">Project Details</TabsTrigger>
-              <TabsTrigger value="media">Media Files ({mediaItems.length})</TabsTrigger>
+              <TabsTrigger value="details">{t("projectDetails")}</TabsTrigger>
+              <TabsTrigger value="media">{t("projectMedia")} ({mediaItems.length})</TabsTrigger>
             </TabsList>
 
             <TabsContent value="details">
@@ -450,7 +482,23 @@ export default function AdminProjectsPage() {
 
                 <div className="space-y-2">
                   <Label htmlFor="thumbnail">{t("projectThumbnail")}</Label>
-                  <Input id="thumbnail" value={form.thumbnail} onChange={(e) => setForm({ ...form, thumbnail: e.target.value })} placeholder="https://..." />
+                  <div className="flex gap-2">
+                    <Input id="thumbnail" value={form.thumbnail} onChange={(e) => setForm({ ...form, thumbnail: e.target.value })} placeholder="https://..." className="flex-1" />
+                    <input
+                      ref={thumbnailInputRef}
+                      type="file"
+                      accept=".jpg,.jpeg,.png,.gif,.webp"
+                      onChange={handleThumbnailUpload}
+                      className="hidden"
+                      id="thumbnail-upload"
+                    />
+                    <Button type="button" variant="outline" onClick={() => thumbnailInputRef.current?.click()} disabled={uploading}>
+                      {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
+                    </Button>
+                  </div>
+                  {form.thumbnail && (
+                    <img src={form.thumbnail} alt="Thumbnail preview" className="mt-2 h-24 rounded object-cover" />
+                  )}
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
@@ -522,7 +570,7 @@ export default function AdminProjectsPage() {
               {/* File Upload Section */}
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-lg">Upload Files</CardTitle>
+                  <CardTitle className="text-lg">{t("uploadFiles")}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="border-2 border-dashed rounded-lg p-6 text-center">
@@ -543,10 +591,10 @@ export default function AdminProjectsPage() {
                           <Upload className="h-8 w-8 text-muted-foreground" />
                         )}
                         <span className="text-sm text-muted-foreground">
-                          {uploading ? "Uploading..." : "Click to upload or drag and drop"}
+                          {uploading ? t("uploading") : t("clickToUpload")}
                         </span>
                         <span className="text-xs text-muted-foreground">
-                          Images (JPG, PNG, GIF) • PDFs • 3D Models (FBX, OBJ, GLB, GLTF) • Videos (MP4, WebM)
+                          {t("supportedFormats")}
                         </span>
                       </div>
                     </label>
@@ -555,12 +603,12 @@ export default function AdminProjectsPage() {
                   {/* Video URL Input */}
                   <div className="flex gap-2">
                     <Input
-                      placeholder="Add video URL (YouTube, Vimeo, or direct link)"
+                      placeholder={t("addVideoUrl")}
                       value={videoUrl}
                       onChange={(e) => setVideoUrl(e.target.value)}
                     />
                     <Button type="button" onClick={handleAddVideoUrl} disabled={!videoUrl.trim()}>
-                      <Plus className="h-4 w-4 mr-1" /> Add Video
+                      <Plus className="h-4 w-4 mr-1" /> {t("addVideo")}
                     </Button>
                   </div>
                 </CardContent>
@@ -570,7 +618,7 @@ export default function AdminProjectsPage() {
               {mediaItems.length > 0 && (
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">Media Files ({mediaItems.length})</CardTitle>
+                    <CardTitle className="text-lg">{t("projectMedia")} ({mediaItems.length})</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-3">
@@ -582,11 +630,11 @@ export default function AdminProjectsPage() {
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2">
                               <Badge variant="outline" className="text-xs">{item.type}</Badge>
-                              {item.isNew && <Badge className="text-xs bg-green-500">New</Badge>}
+                              {item.isNew && <Badge className="text-xs bg-green-500">{t("new")}</Badge>}
                             </div>
                             <p className="text-sm truncate mt-1">{item.filename}</p>
                             <Input
-                              placeholder="Add title (optional)"
+                              placeholder={t("addTitleOptional")}
                               value={item.title || ""}
                               onChange={(e) => handleUpdateMediaTitle(index, e.target.value)}
                               className="mt-2 h-8 text-sm"
@@ -612,9 +660,9 @@ export default function AdminProjectsPage() {
               )}
 
               <DialogFooter>
-                <Button type="button" variant="outline" onClick={() => setShowModal(false)}>Cancel</Button>
+                <Button type="button" variant="outline" onClick={() => setShowModal(false)}>{t("cancel")}</Button>
                 <Button onClick={handleSubmit} disabled={submitting}>
-                  {submitting ? "Saving..." : "Save Project"}
+                  {submitting ? t("saving") : t("saveProject")}
                 </Button>
               </DialogFooter>
             </TabsContent>

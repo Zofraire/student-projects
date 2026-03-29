@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Card, CardContent, CardFooter, CardHeader } from "@/src/components/ui/card";
 import { Badge } from "@/src/components/ui/badge";
 import { Button } from "@/src/components/ui/button";
@@ -25,6 +26,7 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({ project, locale }: ProjectCardProps) {
+  const t = useTranslations("projects");
   const hasImages = project.media.some((m) => m.type === "IMAGE");
   const hasPdf = project.media.some((m) => m.type === "PDF");
   const hasVideo = project.media.some((m) => m.type === "VIDEO");
@@ -132,7 +134,7 @@ export default function ProjectCard({ project, locale }: ProjectCardProps) {
         </div>
         <Link href={`/${locale}/projects/${project.slug}`}>
           <Button variant="ghost" size="sm" className="gap-1">
-            View
+            {t("view")}
             <ArrowRight className="h-3 w-3" />
           </Button>
         </Link>
