@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
@@ -497,7 +498,7 @@ export default function AdminProjectsPage() {
                     </Button>
                   </div>
                   {form.thumbnail && (
-                    <img src={form.thumbnail} alt="Thumbnail preview" className="mt-2 h-24 rounded object-cover" />
+                    <Image src={form.thumbnail} alt="Thumbnail preview" width={96} height={96} className="mt-2 h-24 rounded object-cover" />
                   )}
                 </div>
 

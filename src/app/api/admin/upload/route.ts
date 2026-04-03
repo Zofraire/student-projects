@@ -12,11 +12,28 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
+    const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
+    const ALLOWED_EXTENSIONS = [
+      "jpg", "jpeg", "png", "gif", "webp", "svg",
+      "pdf",
+      "fbx", "obj", "glb", "gltf", "stl", "3ds",
+      "mp4", "webm", "mov", "avi",
+    ];
+
     const formData = await request.formData();
     const file = formData.get("file") as File;
 
     if (!file) {
       return NextResponse.json({ message: "No file provided" }, { status: 400 });
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+      return NextResponse.json({ message: "File size exceeds 50MB limit" }, { status: 400 });
+    }
+
+    const fileExt = file.name.split(".").pop()?.toLowerCase() || "";
+    if (!ALLOWED_EXTENSIONS.includes(fileExt)) {
+      return NextResponse.json({ message: "File type not allowed" }, { status: 400 });
     }
 
     const uploadsDir = join(process.cwd(), "public", "uploads");
